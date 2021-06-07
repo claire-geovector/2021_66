@@ -12,8 +12,11 @@ public partial class Production_ProductionList : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
             //產品清單資訊
             setProductionList();
+        }
     }
 
     private void setProductionList()
