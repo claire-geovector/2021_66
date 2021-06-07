@@ -9,7 +9,12 @@
         <asp:TextBox ID="textProductId" runat="server" Enabled="false" Visible="false" /><br/>	
 
     品名：
-        <asp:TextBox ID="textProductName" runat="server" Width="190px" Height="25px" MaxLength="50" /><br/>	
+        <asp:TextBox ID="textProductName" runat="server" Width="190px" Height="25px" MaxLength="50" /><br/>	<br/>	
+
+            <div style="text-align:center;">
+                <asp:Button ID="savedata" runat="server" Height="25px" Text="儲存" Width="66px" OnClick="savedata_Click" />
+                <asp:Button ID="goback" runat="server" Height="25px" Text="回目錄" Width="66px" OnClick="goback_Click" />
+            </div>
 
 </asp:Content>
 

@@ -48,4 +48,15 @@ public partial class Production_ProductPage : System.Web.UI.Page
             }
         }
     }
+
+    protected void goback_Click(object sender, EventArgs e)
+    {
+        string LINK = "ProductionList.aspx";
+        Response.Redirect(LINK);
+    }
+
+    protected void savedata_Click(object sender, EventArgs e)
+    {
+
+    }
 }
