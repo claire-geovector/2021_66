@@ -66,4 +66,25 @@ public partial class Production_ProductionList : System.Web.UI.Page
 
         Response.Redirect(LINK);
     }
+    protected void BtnProductDel_Click(object sender, EventArgs e)
+    {
+        Button LButton = (Button)sender;
+        string productId =  LButton.CommandArgument;
+
+        string sqlDelProduct = " delete [AdventureWorks2016].[Production].[Product] where ProductID=@ProductID; ";
+        //sqlDelProduct += " delete [AdventureWorks2016].[Production].[BillOfMaterials] where ProductID=@ProductID; ";
+        ConnectionStringSettings connectionString = ConfigurationManager.ConnectionStrings["AdvWConnStr"];
+        using (SqlConnection HeoConn = new SqlConnection(connectionString.ConnectionString))
+        {
+            HeoConn.Open();
+            using (var cmd = HeoConn.CreateCommand())
+            {
+                cmd.CommandText = sqlDelProduct;
+                cmd.Parameters.Add(new SqlParameter("@ProductID", productId));
+                cmd.ExecuteNonQuery();
+                cmd.Cancel();
+            }
+        }
+        Response.Redirect(Request.Url.ToString());
+    }
 }

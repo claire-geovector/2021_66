@@ -19,6 +19,12 @@
                             <asp:Button ID="BtnProductItem" runat="server" CommandArgument='<%# Eval("ProductID") %>' OnClick="BtnProductItem_Click" Text="詳情" />
                         </ItemTemplate>
                     </asp:TemplateField>
+                    
+                    <asp:TemplateField ShowHeader="False">
+                        <ItemTemplate>
+                            <asp:Button ID="BtnProductDel" runat="server" CommandArgument='<%# Eval("ProductID") %>' OnClick="BtnProductDel_Click" Text="刪除" OnClientClick="return confirm('確認刪除這筆資料?')" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
             
                 </Columns>
                 <PagerSettings LastPageText="最後一頁" FirstPageText="第一頁" Mode="NumericFirstLast" NextPageText="下一頁" PreviousPageText="上一頁" />

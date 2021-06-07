@@ -57,6 +57,43 @@ public partial class Production_ProductPage : System.Web.UI.Page
 
     protected void savedata_Click(object sender, EventArgs e)
     {
+        string pgProductID = textProductId.Text;
+        string pgProductNumber = textProductNumber.Text;
+        string pgProductName = textProductName.Text;
+        string ShowMsg = string.Empty;
 
+        if (pgProductNumber.Trim() =="") {
+            ShowMsg = "編號為必填請輸入資料";
+            Response.Write("<script>alert('" + ShowMsg + "');</script>");
+            return;
+        }
+        if (pgProductName.Trim() == "")
+        {
+            ShowMsg = "品名為必填請輸入資料";
+            Response.Write("<script>alert('" + ShowMsg + "');</script>");
+            return;
+        }
+        if (ShowMsg == "") {
+
+            string sqlDelProduct = " update [AdventureWorks2016].[Production].[Product] set ProductNumber=@ProductNumber,Name=@Name where ProductID=@ProductID; ";
+            //sqlDelProduct += " delete [AdventureWorks2016].[Production].[BillOfMaterials] where ProductID=@ProductID; ";
+            ConnectionStringSettings connectionString = ConfigurationManager.ConnectionStrings["AdvWConnStr"];
+            using (SqlConnection HeoConn = new SqlConnection(connectionString.ConnectionString))
+            {
+                HeoConn.Open();
+                using (var cmd = HeoConn.CreateCommand())
+                {
+                    cmd.CommandText = sqlDelProduct;
+                    cmd.Parameters.Add(new SqlParameter("@ProductID", pgProductID));
+                    cmd.Parameters.Add(new SqlParameter("@ProductNumber", pgProductNumber));
+                    cmd.Parameters.Add(new SqlParameter("@Name", pgProductName));
+                    cmd.ExecuteNonQuery();
+                    cmd.Cancel();
+                }
+            }
+            ShowMsg = "資料已存檔";
+            Response.Write("<script>alert('" + ShowMsg + "');</script>");
+            return;
+        }
     }
 }
