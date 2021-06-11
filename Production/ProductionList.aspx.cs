@@ -26,6 +26,8 @@ public partial class Production_ProductionList : System.Web.UI.Page
         DTGV01.Columns.Add(new DataColumn("ProductID", typeof(string)));
         DTGV01.Columns.Add(new DataColumn("ProductName", typeof(string)));
         DTGV01.Columns.Add(new DataColumn("ProductNumber", typeof(string)));
+        DTGV01.Columns.Add(new DataColumn("SafetyStockLevel", typeof(string)));
+        
         ViewState["GV01"] = DTGV01;
         OBJ_GV01 = DTGV01;
 
@@ -44,12 +46,14 @@ public partial class Production_ProductionList : System.Web.UI.Page
                 string tmpProductID = readerItem["ProductID"] + "";
                 string tmpName = readerItem["Name"] + "";
                 string tmpProductNumber = readerItem["ProductNumber"] + "";
+                string tmpSafetyStockLevel = readerItem["SafetyStockLevel"] + "";
 
                 DataRow dr01 = OBJ_GV01.NewRow();
 
                 dr01["ProductID"] = tmpProductID;
                 dr01["ProductName"] = tmpName;
                 dr01["ProductNumber"] = tmpProductNumber;
+                dr01["SafetyStockLevel"] = tmpSafetyStockLevel;
 
                 OBJ_GV01.Rows.Add(dr01);
                 ViewState["GV01"] = OBJ_GV01;
@@ -74,10 +78,10 @@ public partial class Production_ProductionList : System.Web.UI.Page
         string sqlDelProduct = " delete [AdventureWorks2016].[Production].[Product] where ProductID=@ProductID; ";
         //sqlDelProduct += " delete [AdventureWorks2016].[Production].[BillOfMaterials] where ProductID=@ProductID; ";
         ConnectionStringSettings connectionString = ConfigurationManager.ConnectionStrings["AdvWConnStr"];
-        using (SqlConnection HeoConn = new SqlConnection(connectionString.ConnectionString))
+        using (SqlConnection AwConn = new SqlConnection(connectionString.ConnectionString))
         {
-            HeoConn.Open();
-            using (var cmd = HeoConn.CreateCommand())
+            AwConn.Open();
+            using (var cmd = AwConn.CreateCommand())
             {
                 cmd.CommandText = sqlDelProduct;
                 cmd.Parameters.Add(new SqlParameter("@ProductID", productId));
@@ -86,5 +90,12 @@ public partial class Production_ProductionList : System.Web.UI.Page
             }
         }
         Response.Redirect(Request.Url.ToString());
+    }
+
+    protected void btnNewProduct_Click(object sender, EventArgs e)
+    {
+        string LINK = "ProductPage.aspx?ProductID=NewProduct";
+
+        Response.Redirect(LINK);
     }
 }
