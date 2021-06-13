@@ -122,10 +122,10 @@ public partial class Production_ProductPage : System.Web.UI.Page
                 sqlDelProduct += "values (@ProductNumber,@Name,@SafetyStockLevel,750,0,0,0,getdate());  ";
                 //sqlDelProduct += " delete [AdventureWorks2016].[Production].[BillOfMaterials] where ProductID=@ProductID; ";
                 ConnectionStringSettings connectionString = ConfigurationManager.ConnectionStrings["AdvWConnStr"];
-                using (SqlConnection HeoConn = new SqlConnection(connectionString.ConnectionString))
+                using (SqlConnection AWConn = new SqlConnection(connectionString.ConnectionString))
                 {
-                    HeoConn.Open();
-                    using (var cmd = HeoConn.CreateCommand())
+                    AWConn.Open();
+                    using (var cmd = AWConn.CreateCommand())
                     {
                         cmd.CommandText = sqlDelProduct;
                         cmd.Parameters.Add(new SqlParameter("@ProductNumber", pgProductNumber));
